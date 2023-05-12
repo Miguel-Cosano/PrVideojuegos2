@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -6665900256844532081}
   - component: {fileID: 2417847267996258477}
   - component: {fileID: -1327643788136415797}
+  - component: {fileID: -7595417158966187860}
   m_Layer: 0
   m_Name: axe
   m_TagString: Untagged
@@ -117,7 +118,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -171,3 +172,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6f771004cfdc14cb3898faca8f295c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocity: 0
+--- !u!64 &-7595417158966187860
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164328234615206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 9f1810da5391ad942b0710778d90f7d2, type: 3}
