@@ -14,10 +14,14 @@ public class CocheBehaviour : MonoBehaviour
     public Transform checkpoint4;
     public Transform checkpoint5;
 
+    public Raycast raycastScript;
+    public float velocidad = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
         estado = Estado.Plataforma;
+        raycastScript = GetComponent<Raycast>();
     }
 
     // Update is called once per frame
@@ -36,6 +40,10 @@ public class CocheBehaviour : MonoBehaviour
                 break;
             case Estado.Plataforma:
                 //Funcion para la plataforma
+                //if(raycastScript)
+                //{
+                transform.position = new Vector3(transform.position.x - velocidad * Time.deltaTime, transform.position.y, transform.position.z);
+                //}
                 break;
             case Estado.Zigzag:
                 //Funcion para el zigzag
@@ -64,6 +72,7 @@ public class CocheBehaviour : MonoBehaviour
                     break;
                 case Estado.Plataforma:
                     transform.position = checkpoint1.position;
+                    //transform.rotation = Quaternion.Euler(0, 0, 0);
                     //transform.rotation = checkpoint1.rotation;
                     break;
                 case Estado.Zigzag:
