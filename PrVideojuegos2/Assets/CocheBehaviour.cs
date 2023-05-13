@@ -17,7 +17,7 @@ public class CocheBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        estado = Estado.Cuestas;
+        estado = Estado.Plataforma;
     }
 
     // Update is called once per frame
@@ -55,9 +55,11 @@ public class CocheBehaviour : MonoBehaviour
                     //transform.rotation = checkpoint3.rotation;
                     break;
                 case Estado.Salto:
+                    transform.position = checkpoint5.position;
                     //Checkpoint salto
                     break;
                 case Estado.Hachas:
+                    transform.position = checkpoint4.position;
                     //Checkpoint hacha
                     break;
                 case Estado.Plataforma:
