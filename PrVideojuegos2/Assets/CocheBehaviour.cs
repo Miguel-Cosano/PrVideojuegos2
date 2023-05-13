@@ -13,15 +13,20 @@ public class CocheBehaviour : MonoBehaviour
     public Transform checkpoint3;
     public Transform checkpoint4;
     public Transform checkpoint5;
+    
+    /////////////////////////////////////////////////////////////////////////////
+    // Añadir velocidad y array de los raycasts
+    public float velocidad = 1f;    
+    public Transform[] hijos;
+    RaycastHit[] hits = new RaycastHit[5];
+    /////////////////////////////////////////////////////////////////////////////
 
-    public Raycast raycastScript;
-    public float velocidad = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
         estado = Estado.Plataforma;
-        raycastScript = GetComponent<Raycast>();
+        //raycastScript = GetComponent<Raycast>();
     }
 
     // Update is called once per frame
@@ -40,10 +45,12 @@ public class CocheBehaviour : MonoBehaviour
                 break;
             case Estado.Plataforma:
                 //Funcion para la plataforma
-                //if(raycastScript)
-                //{
-                transform.position = new Vector3(transform.position.x - velocidad * Time.deltaTime, transform.position.y, transform.position.z);
-                //}
+                /* Aquí si se identifica que el raycast central apunta a carretera o plataforma, avanza
+                if(raycastScript)
+                {
+                    transform.position = new Vector3(transform.position.x - velocidad * Time.deltaTime, transform.position.y, transform.position.z);
+                }
+                */
                 break;
             case Estado.Zigzag:
                 //Funcion para el zigzag
@@ -82,4 +89,36 @@ public class CocheBehaviour : MonoBehaviour
             }
         }
     }
+
+    /*
+     private void Observar()
+    {
+        GameObject avistado;
+        for (int cont = 0; cont < hijos.Length; cont++)
+        {
+            if (Physics.Raycast(hijos[cont].position, hijos[cont].forward, out hits[cont], largoRayo))
+            {
+                avistado = hits[cont].collider.gameObject;
+                if (avistado.tag.Equals("MeshLlave") && hits[cont].collider != null && avistado.transform.parent.GetComponent<llaveBehaviour>().IsAvaliable() && estado == Estado.BUSCANDO_CASA && !tieneLlave)
+                {
+                    estado = Estado.OBTENER_LLAVE;
+                    objetivo = avistado;
+                    navMeshAgent.SetDestination(objetivo.transform.position);
+                }else if(avistado.tag.Equals("Policia") && hits[cont].collider != null && estado == Estado.BUSCANDO_CASA)
+                {
+                    if (avistado.GetComponent<policeBehaviour>().EstaLlevandoACarcel())
+                    {
+                        estado = Estado.ATACAR_POLICIA;
+                        objetivo = avistado;
+                        navMeshAgent.SetDestination(objetivo.transform.position);
+                    }
+                }else if(avistado.tag.Equals("MeshLlave") && hits[cont].collider != null && !avistado.transform.parent.GetComponent<llaveBehaviour>().IsAvaliable() && estado == Estado.OBTENER_LLAVE)
+                {
+                    objetivo = null;
+                    estado = Estado.BUSCANDO_CASA;
+                }
+            }
+        }
+    }
+     */
 }
