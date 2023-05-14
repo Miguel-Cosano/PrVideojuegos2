@@ -52,7 +52,7 @@ public class entrenamientoCuestas : MonoBehaviour
 
 
             Instance casoAaprender = new Instance(casosEntrenamiento.numAttributes());
-            acciones = "Generando experiencia con aceleracion= "+aceleracion +
+            acciones = "Generando experiencia con aceleracion= " + aceleracion;
 
         }
     }
