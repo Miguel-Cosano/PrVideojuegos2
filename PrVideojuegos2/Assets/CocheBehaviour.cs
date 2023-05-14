@@ -13,14 +13,6 @@ public class CocheBehaviour : MonoBehaviour
     public Transform checkpoint3;
     public Transform checkpoint4;
     public Transform checkpoint5;
-    
-    /////////////////////////////////////////////////////////////////////////////
-    // Añadir velocidad y array de los raycasts
-    public float velocidad = 1f;    
-    public Transform[] hijos;
-    RaycastHit[] hits = new RaycastHit[3];
-    /////////////////////////////////////////////////////////////////////////////
-
 
     public WheelCollider delanteDerecha;
     public WheelCollider delanteIzquierda;
