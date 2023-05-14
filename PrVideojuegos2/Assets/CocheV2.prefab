@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4298306190890898205}
   - component: {fileID: 4298306190890898206}
   m_Layer: 0
-  m_Name: Coche V2
+  m_Name: CocheV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   delanteIzquierdaTransform: {fileID: 4298306192520428808}
   detrasDerechaTransform: {fileID: 4298306191025373270}
   detrasIzquierdaTransform: {fileID: 4298306192789201880}
-  aceleracion: 10
+  aceleracion: 0
   fuerzaDeRotura: 300
   raycast:
   - {fileID: 4298306190720846898}
