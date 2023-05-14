@@ -13,6 +13,14 @@ public class CocheBehaviour : MonoBehaviour
     public Transform checkpoint3;
     public Transform checkpoint4;
     public Transform checkpoint5;
+    
+    /////////////////////////////////////////////////////////////////////////////
+    // Añadir velocidad y array de los raycasts
+    public float velocidad = 1f;    
+    public Transform[] hijos;
+    RaycastHit[] hits = new RaycastHit[3];
+    /////////////////////////////////////////////////////////////////////////////
+
 
     public WheelCollider delanteDerecha;
     public WheelCollider delanteIzquierda;
@@ -41,9 +49,11 @@ public class CocheBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         estado = Estado.Cuestas;
         rigidBody = GetComponent<Rigidbody>();
   
+
     }
 
     // Update is called once per frame
@@ -78,6 +88,12 @@ public class CocheBehaviour : MonoBehaviour
                 break;
             case Estado.Plataforma:
                 //Funcion para la plataforma
+                /* Aquí si se identifica que el raycast central apunta a carretera o plataforma, avanza
+                if(raycastScript)
+                {
+                    transform.position = new Vector3(transform.position.x - velocidad * Time.deltaTime, transform.position.y, transform.position.z);
+                }
+                */
                 break;
             case Estado.Zigzag:
                 //Funcion para el zigzag
@@ -137,13 +153,16 @@ public class CocheBehaviour : MonoBehaviour
                     //transform.rotation = checkpoint3.rotation;
                     break;
                 case Estado.Salto:
+                    transform.position = checkpoint5.position;
                     //Checkpoint salto
                     break;
                 case Estado.Hachas:
+                    transform.position = checkpoint4.position;
                     //Checkpoint hacha
                     break;
                 case Estado.Plataforma:
                     transform.position = checkpoint1.position;
+                    //transform.rotation = Quaternion.Euler(0, 0, 0);
                     //transform.rotation = checkpoint1.rotation;
                     break;
                 case Estado.Zigzag:
@@ -153,4 +172,6 @@ public class CocheBehaviour : MonoBehaviour
             }
         }
     }
+
+   
 }
