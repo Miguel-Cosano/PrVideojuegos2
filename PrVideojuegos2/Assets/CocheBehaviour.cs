@@ -57,51 +57,28 @@ public class CocheBehaviour : MonoBehaviour
 
     private int indexCuesta;
 
+    float Brakes;
+
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 30;
         indexCuesta = 0;
-        estado = Estado.Cuestas;
-        rigidBody = GetComponent<Rigidbody>();
-        
 
+        estado = Estado.Plataforma;
+        rigidBody = GetComponent<Rigidbody>();
+
+        Brakes = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if(usarModelo)
-        {
-            casosEntrenamiento = new weka.core.Instances(new java.io.FileReader("Assets/Finales_Cuesta.arff"));
-            saberPredecirAceleracion = new M5P();
-            casosEntrenamiento.setClassIndex(0);
-            saberPredecirAceleracion.buildClassifier(casosEntrenamiento);
-
-            //Calculo angulo y longitud de la cuesta
-            UnityEngine.Vector3 dir1 = finCuestaObjetivo.position - inicioCuestaObjetivo.position ;
-            dir1.Normalize();
-            float angulo = UnityEngine.Vector3.Angle(dir1, Vector3.left);
-
-            Instance casoPrueba = new Instance(casosEntrenamiento.numAttributes());
-            casoPrueba.setValue(1, angulo);
-
-            aceleracion= (float)saberPredecirAceleracion.classifyInstance(casoPrueba);
-            usarModelo = false;
-
-            print("Para esta cuesta de " + angulo + "º grados voy a aplicar una fuerza de " + aceleracion);
-        }
-
-
-        if(Vector3.Distance(finCuestaObjetivo.position,transform.position) >= 1)
-        {
-            rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);
-        }
         //Aplicamos fuerza sobre el coche
-       
+
 
         acelaracionActual = aceleracion;
-        
+
         //Establecemos el giro de las ruedas en funcion de la fuerza
         delanteDerecha.motorTorque = acelaracionActual;
         delanteIzquierda.motorTorque = acelaracionActual;
@@ -116,7 +93,7 @@ public class CocheBehaviour : MonoBehaviour
         switch (estado)
         {
             case Estado.Cuestas:
-                //Funcion para las cuestas
+                pruebaCuesta();
                 break;
             case Estado.Salto:
                 //Funcion para los saltos
@@ -125,24 +102,75 @@ public class CocheBehaviour : MonoBehaviour
                 //Funcion para las hachas
                 break;
             case Estado.Plataforma:
-                //Funcion para la plataforma
-                /* Aquí si se identifica que el raycast central apunta a carretera o plataforma, avanza
-                if(raycastScript)
-                {
-                    transform.position = new Vector3(transform.position.x - velocidad * Time.deltaTime, transform.position.y, transform.position.z);
-                }
-                */
+                pruebaPlataforma();
                 break;
             case Estado.Zigzag:
-                //Funcion para el zigzag
+                pruebaZigzag();
                 break;
         }
-        
+
     }
 
-    void observarCarretera()
+    void pruebaCuesta()
     {
+        if (usarModelo)
+        {
+            casosEntrenamiento = new weka.core.Instances(new java.io.FileReader("Assets/Finales_Cuesta.arff"));
+            saberPredecirAceleracion = new M5P();
+            casosEntrenamiento.setClassIndex(0);
+            saberPredecirAceleracion.buildClassifier(casosEntrenamiento);
 
+            //Calculo angulo y longitud de la cuesta
+            UnityEngine.Vector3 dir1 = finCuestaObjetivo.position - inicioCuestaObjetivo.position;
+            dir1.Normalize();
+            float angulo = UnityEngine.Vector3.Angle(dir1, Vector3.left);
+
+            Instance casoPrueba = new Instance(casosEntrenamiento.numAttributes());
+            casoPrueba.setValue(1, angulo);
+
+            aceleracion = (float)saberPredecirAceleracion.classifyInstance(casoPrueba);
+            usarModelo = false;
+
+            print("Para esta cuesta de " + angulo + "º grados voy a aplicar una fuerza de " + aceleracion);
+        }
+
+
+        if (Vector3.Distance(finCuestaObjetivo.position, transform.position) >= 1)
+        {
+            rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);
+        }
+    }
+
+    void pruebaPlataforma()
+    {
+        for (int cont = 0; cont < raycast.Length; cont++)
+        {
+            if (Physics.Raycast(raycast[cont].position, raycast[cont].forward, out hits[cont], 30))
+            {
+
+                if (hits[cont].collider.gameObject.CompareTag("Carretera") || hits[cont].collider.gameObject.CompareTag("Plataforma"))
+                {
+                    if (cont == 0) 
+                    {
+                        aceleracion = 35;
+                    } 
+                }
+                else
+                {
+                    if (cont == 0)
+                    {
+                        Brakes = 300;
+                        delanteDerecha.brakeTorque = Brakes;
+                        delanteIzquierda.brakeTorque = Brakes;
+                    }
+                }
+            }
+        }
+    }
+
+    void pruebaZigzag()
+    {
+        aceleracion = 10;
         for (int cont = 0; cont < raycast.Length; cont++)
         {
             if (Physics.Raycast(raycast[cont].position, raycast[cont].forward, out hits[cont], 30))
@@ -152,20 +180,32 @@ public class CocheBehaviour : MonoBehaviour
                 {
                     if (cont == 1) // Se acerca una curva hacia la derecha 
                     {
-                        transform.Rotate(0, 30 * Time.deltaTime, 0);
+                        girarDerecha();
                     }
                     else if (cont == 2) //Se acerca una curva hacia la izquierda
                     {
-                        transform.Rotate(0, -30 * Time.deltaTime, 0);
+                        girarIzquierda();
                     }
                 }
-                
-
-
-
             }
         }
 
+    }
+
+    void girarDerecha()
+    {
+        if(hits[1].collider.gameObject.CompareTag("Suelo"))
+        {
+            transform.Rotate(0, 80 * Time.deltaTime, 0);
+        }
+    }
+
+    void girarIzquierda()
+    {
+        if (hits[2].collider.gameObject.CompareTag("Suelo"))
+        {
+            transform.Rotate(0, -80 * Time.deltaTime, 0);
+        }
     }
 
     void updateRuedas()
@@ -180,37 +220,36 @@ public class CocheBehaviour : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter()
     {
-        if (collision.gameObject.CompareTag("Suelo"))
+        // Ir al checkpoint correspondiente
+        switch (estado)
         {
-            // Ir al checkpoint correspondiente
-            switch (estado)
-            {
-                case Estado.Cuestas:
-                    transform.position = checkpoint3.position;
-                    //transform.rotation = checkpoint3.rotation;
-                    break;
-                case Estado.Salto:
-                    transform.position = checkpoint5.position;
-                    //Checkpoint salto
-                    break;
-                case Estado.Hachas:
-                    transform.position = checkpoint4.position;
-                    //Checkpoint hacha
-                    break;
-                case Estado.Plataforma:
-                    transform.position = checkpoint1.position;
-                    //transform.rotation = Quaternion.Euler(0, 0, 0);
-                    //transform.rotation = checkpoint1.rotation;
-                    break;
-                case Estado.Zigzag:
-                    transform.position = checkpoint2.position;
-                    //transform.rotation = checkpoint2.rotation;
-                    break;
-            }
+            case Estado.Cuestas:
+                transform.position = checkpoint3.position;
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                //transform.rotation = checkpoint3.rotation;
+                break;
+            case Estado.Salto:
+                transform.position = checkpoint5.position;
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                //Checkpoint salto
+                break;
+            case Estado.Hachas:
+                transform.position = checkpoint4.position;
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                //Checkpoint hacha
+                break;
+            case Estado.Plataforma:
+                transform.position = checkpoint1.position;
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                //transform.rotation = checkpoint1.rotation;
+                break;
+            case Estado.Zigzag:
+                transform.position = checkpoint2.position;
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                //transform.rotation = checkpoint2.rotation;
+                break;
         }
     }
-
-   
 }
