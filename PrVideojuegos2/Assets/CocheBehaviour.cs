@@ -1,12 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using weka.classifiers.trees;
+using weka.classifiers.evaluation;
+using weka.core;
+using java.io;
+using java.lang;
+using java.util;
+using weka.classifiers.functions;
+using weka.classifiers;
+using weka.core.converters;
 
 public class CocheBehaviour : MonoBehaviour
 {
 
     public enum Estado { Cuestas, Salto, Hachas, Plataforma, Zigzag };
     Estado estado;
+
+    M5P saberPredecirAceleracion;
+    weka.core.Instances casosEntrenamiento;
 
     public Transform checkpoint1;
     public Transform checkpoint2;
@@ -24,6 +36,9 @@ public class CocheBehaviour : MonoBehaviour
     public Transform detrasDerechaTransform;
     public Transform detrasIzquierdaTransform;
 
+    public Transform inicioCuestaObjetivo;
+    public Transform finCuestaObjetivo;
+
 
 
     public float aceleracion = 500f;
@@ -33,26 +48,57 @@ public class CocheBehaviour : MonoBehaviour
     private float acelaracionActual = 0f;
     private float fuerzaDeRoturaActual = 0f;
 
+
     private Rigidbody rigidBody;
 
     public Transform[] raycast;
     RaycastHit[] hits = new RaycastHit[3];
+    public bool usarModelo;
+
+    private int indexCuesta;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        indexCuesta = 0;
         estado = Estado.Cuestas;
         rigidBody = GetComponent<Rigidbody>();
-  
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(usarModelo)
+        {
+            casosEntrenamiento = new weka.core.Instances(new java.io.FileReader("Assets/Finales_Cuesta.arff"));
+            saberPredecirAceleracion = new M5P();
+            casosEntrenamiento.setClassIndex(0);
+            saberPredecirAceleracion.buildClassifier(casosEntrenamiento);
+
+            //Calculo angulo y longitud de la cuesta
+            UnityEngine.Vector3 dir1 = finCuestaObjetivo.position - inicioCuestaObjetivo.position ;
+            dir1.Normalize();
+            float angulo = UnityEngine.Vector3.Angle(dir1, Vector3.left);
+
+            Instance casoPrueba = new Instance(casosEntrenamiento.numAttributes());
+            casoPrueba.setValue(1, angulo);
+
+            aceleracion= (float)saberPredecirAceleracion.classifyInstance(casoPrueba);
+            usarModelo = false;
+
+            print("Para esta cuesta de " + angulo + "º grados voy a aplicar una fuerza de " + aceleracion);
+        }
+
+
+        if(Vector3.Distance(finCuestaObjetivo.position,transform.position) >= 1)
+        {
+            rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);
+        }
         //Aplicamos fuerza sobre el coche
-        rigidBody.AddRelativeForce(aceleracion * Vector3.forward);
+       
 
         acelaracionActual = aceleracion;
         
@@ -61,12 +107,12 @@ public class CocheBehaviour : MonoBehaviour
         delanteIzquierda.motorTorque = acelaracionActual;
 
         //Establecemos la fuerza que es necesaria aplicar para que empiece a moverse
-        delanteDerecha.brakeTorque = fuerzaDeRoturaActual;
-        delanteIzquierda.brakeTorque = fuerzaDeRoturaActual;
+        delanteDerecha.brakeTorque = 0;
+        delanteIzquierda.brakeTorque = 0;
 
 
         updateRuedas(); //Metodo para hacer que las ruedas giren
-        observarCarretera();//Metodo para que el coche gire si detecta que la carretera gira a izquierda o a derecha
+        //observarCarretera();//Metodo para que el coche gire si detecta que la carretera gira a izquierda o a derecha
         switch (estado)
         {
             case Estado.Cuestas:
@@ -113,6 +159,7 @@ public class CocheBehaviour : MonoBehaviour
                         transform.Rotate(0, -30 * Time.deltaTime, 0);
                     }
                 }
+                
 
 
 

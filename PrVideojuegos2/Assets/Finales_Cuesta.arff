@@ -1,0 +1,11 @@
+@relation FuncionCuadratica
+
+@attribute controlVar0 numeric
+@attribute varObjetivo numeric
+
+@data
+20,10.886346
+35,21.473984
+45,29.182896
+50,35.731853
+75,45.496536
