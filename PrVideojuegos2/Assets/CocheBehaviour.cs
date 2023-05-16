@@ -25,6 +25,9 @@ public class CocheBehaviour : MonoBehaviour
     public Transform checkpoint3;
     public Transform checkpoint4;
     public Transform checkpoint5;
+    public Transform metaPlataforma;
+    public Transform metaZigZag;
+    public Transform metaCuestas;
 
     public WheelCollider delanteDerecha;
     public WheelCollider delanteIzquierda;
@@ -139,6 +142,14 @@ public class CocheBehaviour : MonoBehaviour
         {
             rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);
         }
+
+        if ((Vector3.Distance(metaCuestas.position, transform.position) <= 2.5))
+        {
+            print("Nivel de las cuestas superado");
+            estado = Estado.Hachas;
+            transform.position = checkpoint4.position;
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
     }
 
     void pruebaPlataforma()
@@ -152,7 +163,7 @@ public class CocheBehaviour : MonoBehaviour
                 {
                     if (cont == 0) 
                     {
-                        aceleracion = 35;
+                        aceleracion = 25;
                     } 
                 }
                 else
@@ -166,11 +177,20 @@ public class CocheBehaviour : MonoBehaviour
                 }
             }
         }
+
+        if((Vector3.Distance(metaPlataforma.position, transform.position) <= 0.5))
+        {
+            print("Nivel de la plataforma superado");
+            estado = Estado.Zigzag;
+            transform.position = checkpoint2.position;
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
     }
 
     void pruebaZigzag()
     {
-        aceleracion = 10;
+        
+        aceleracion = 14;
         for (int cont = 0; cont < raycast.Length; cont++)
         {
             if (Physics.Raycast(raycast[cont].position, raycast[cont].forward, out hits[cont], 30))
@@ -189,7 +209,13 @@ public class CocheBehaviour : MonoBehaviour
                 }
             }
         }
-
+        if ((Vector3.Distance(metaZigZag.position, transform.position) <= 0.5))
+        {
+            print("Nivel del zigzag superado");
+            estado = Estado.Cuestas;
+            transform.position = checkpoint3.position;
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
     }
 
     void girarDerecha()
