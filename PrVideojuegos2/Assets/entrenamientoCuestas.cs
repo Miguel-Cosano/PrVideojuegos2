@@ -74,7 +74,7 @@ public class entrenamientoCuestas : MonoBehaviour
 
                 Rigidbody rb = InstanciaCoche.GetComponent<Rigidbody>();
 
-                InstanciaCoche.GetComponent<CocheBehaviour>().aceleracion = aceleracion;
+                InstanciaCoche.GetComponent<CocheBehaviourEntrenamiento>().aceleracion = aceleracion;
 
                
                 
