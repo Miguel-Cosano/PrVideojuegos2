@@ -255,7 +255,7 @@ public class CocheBehaviour : MonoBehaviour
 
     void pruebaSalto()
     {
-        aceleracion = 53;
+        aceleracion = 50;
         if (Vector3.Distance(metaSalto.position, transform.position) >= 1)
         {
             rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);

@@ -1,3 +1,4 @@
+using com.sun.corba.se.pept.broker;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,6 +70,9 @@ public class CocheBehaviourHachas : MonoBehaviour
             case Estado.Salto:
                 pruebaSalto();
                 break;
+            case Estado.Completado:
+                entrenamientoCompletado();
+                break;
         }
     }
 
@@ -95,6 +99,12 @@ public class CocheBehaviourHachas : MonoBehaviour
             estado = Estado.Completado;
             transform.position = completado.position;
         }
+    }
+
+    void entrenamientoCompletado()
+    {
+        transform.position = completado.position;
+        transform.Rotate(0f, 0f, 0f);   
     }
 
     void updateRuedas()
