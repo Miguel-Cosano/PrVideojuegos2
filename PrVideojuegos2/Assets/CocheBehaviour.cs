@@ -14,7 +14,7 @@ using weka.core.converters;
 public class CocheBehaviour : MonoBehaviour
 {
 
-    public enum Estado { Cuestas, Salto, Hachas, Plataforma, Zigzag };
+    public enum Estado { Cuestas, Salto, Hachas, Plataforma, Zigzag, Completado };
     Estado estado;
 
     M5P saberPredecirAceleracion;
@@ -25,9 +25,12 @@ public class CocheBehaviour : MonoBehaviour
     public Transform checkpoint3;
     public Transform checkpoint4;
     public Transform checkpoint5;
+    public Transform checkpoint6;
     public Transform metaPlataforma;
     public Transform metaZigZag;
     public Transform metaCuestas;
+    public Transform metaHachas;
+    public Transform metaSalto;
 
     public WheelCollider delanteDerecha;
     public WheelCollider delanteIzquierda;
@@ -68,7 +71,7 @@ public class CocheBehaviour : MonoBehaviour
         Application.targetFrameRate = 30;
         indexCuesta = 0;
 
-        estado = Estado.Plataforma;
+        estado = Estado.Hachas;
         rigidBody = GetComponent<Rigidbody>();
 
         Brakes = 0;
@@ -99,16 +102,19 @@ public class CocheBehaviour : MonoBehaviour
                 pruebaCuesta();
                 break;
             case Estado.Salto:
-                //Funcion para los saltos
+                pruebaSalto();
                 break;
             case Estado.Hachas:
-                //Funcion para las hachas
+                pruebaHachas();
                 break;
             case Estado.Plataforma:
                 pruebaPlataforma();
                 break;
             case Estado.Zigzag:
                 pruebaZigzag();
+                break;
+            case Estado.Completado:
+                completado();
                 break;
         }
 
@@ -145,6 +151,7 @@ public class CocheBehaviour : MonoBehaviour
 
         if ((Vector3.Distance(metaCuestas.position, transform.position) <= 2.5))
         {
+            rigidBody.AddRelativeForce(aceleracion * Vector3.back, ForceMode.Impulse);
             print("Nivel de las cuestas superado");
             estado = Estado.Hachas;
             transform.position = checkpoint4.position;
@@ -233,6 +240,43 @@ public class CocheBehaviour : MonoBehaviour
             transform.Rotate(0, -80 * Time.deltaTime, 0);
         }
     }
+
+    void pruebaHachas()
+    {
+        aceleracion = 25;
+        if ((Vector3.Distance(metaHachas.position, transform.position) <= 0.5))
+        {
+            print("Nivel de hachas superado");
+            estado = Estado.Salto;
+            transform.position = checkpoint5.position;
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+    }
+
+    void pruebaSalto()
+    {
+        aceleracion = 53;
+        if (Vector3.Distance(metaSalto.position, transform.position) >= 1)
+        {
+            rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);
+        }
+        if ((Vector3.Distance(metaSalto.position, transform.position) <= 0.5))
+        {
+            print("Nivel del salto superado. Juego completado");
+            estado = Estado.Completado;
+            transform.position = checkpoint6.position;
+        }
+    }
+
+    void completado()
+    {
+        Brakes = 300;
+        delanteDerecha.brakeTorque = Brakes;
+        delanteIzquierda.brakeTorque = Brakes;
+        transform.position = checkpoint6.position;
+        transform.Rotate(0f, 0f, 0f);
+    }
+
 
     void updateRuedas()
     {
