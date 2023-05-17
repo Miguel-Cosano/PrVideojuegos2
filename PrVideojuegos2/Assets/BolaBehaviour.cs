@@ -15,4 +15,10 @@ public class BolaBehaviour : MonoBehaviour
     {
         
     }
+
+    public void ReStart()
+    {
+        transform.rotation = new Quaternion(0f, 0f, 0f, 1);
+        transform.position = new Vector3(0f, 0f, 90f);
+    }
 }

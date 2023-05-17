@@ -54,7 +54,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4298306190890898204}
-  - component: {fileID: 4298306190890898202}
   - component: {fileID: 4298306190890898205}
   - component: {fileID: 4298306190890898206}
   m_Layer: 0
@@ -83,32 +82,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 92.745, z: 0}
---- !u!114 &4298306190890898202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298306190890898201}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f04e018996ef5604d9d1fe1b128994c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delanteDerecha: {fileID: 4298306192506941023}
-  delanteIzquierda: {fileID: 4298306191983317748}
-  detrasDerecha: {fileID: 4298306192499136948}
-  detrasIzquierda: {fileID: 4298306191532458335}
-  delanteDerechaTransform: {fileID: 4298306191822122860}
-  delanteIzquierdaTransform: {fileID: 4298306192520428808}
-  detrasDerechaTransform: {fileID: 4298306191025373270}
-  detrasIzquierdaTransform: {fileID: 4298306192789201880}
-  aceleracion: 100
-  fuerzaDeRotura: 300
-  raycast:
-  - {fileID: 4298306190720846898}
-  - {fileID: 4298306192224449370}
-  - {fileID: 4298306192239495057}
 --- !u!54 &4298306190890898205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,6 +115,12 @@ MonoBehaviour:
   checkpoint3: {fileID: 0}
   checkpoint4: {fileID: 0}
   checkpoint5: {fileID: 0}
+  checkpoint6: {fileID: 0}
+  metaPlataforma: {fileID: 0}
+  metaZigZag: {fileID: 0}
+  metaCuestas: {fileID: 0}
+  metaHachas: {fileID: 0}
+  metaSalto: {fileID: 0}
   delanteDerecha: {fileID: 4298306192506941023}
   delanteIzquierda: {fileID: 4298306191983317748}
   detrasDerecha: {fileID: 4298306192499136948}
@@ -150,12 +129,15 @@ MonoBehaviour:
   delanteIzquierdaTransform: {fileID: 4298306192520428808}
   detrasDerechaTransform: {fileID: 4298306191025373270}
   detrasIzquierdaTransform: {fileID: 4298306192789201880}
+  inicioCuestaObjetivo: {fileID: 0}
+  finCuestaObjetivo: {fileID: 0}
   aceleracion: 0
   fuerzaDeRotura: 300
   raycast:
   - {fileID: 4298306190720846898}
   - {fileID: 4298306192224449370}
   - {fileID: 4298306192239495057}
+  usarModelo: 0
 --- !u!1 &4298306191025373269
 GameObject:
   m_ObjectHideFlags: 0
