@@ -71,7 +71,7 @@ public class CocheBehaviour : MonoBehaviour
         Application.targetFrameRate = 30;
         indexCuesta = 0;
 
-        estado = Estado.Hachas;
+        estado = Estado.Plataforma;
         rigidBody = GetComponent<Rigidbody>();
 
         Brakes = 0;
