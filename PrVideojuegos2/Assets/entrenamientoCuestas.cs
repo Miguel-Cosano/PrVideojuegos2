@@ -46,6 +46,8 @@ public class entrenamientoCuestas : MonoBehaviour
     void Start()
     {
         //Time.timeScale = 6f;
+        Application.targetFrameRate = 30;
+
         incrementoAceleracion = 5;
         metaAlcanzada = false;
         StartCoroutine("Entrenamiento");
