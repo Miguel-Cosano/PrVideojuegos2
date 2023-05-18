@@ -60,9 +60,9 @@ public class entrenamientoCuestas : MonoBehaviour
         int aceleracion = 10;
         for (int indexCuesta = 0; indexCuesta < cuestas.Length ; indexCuesta++) 
         {
-            int numPruebas = 0;
             
-            while (!metaAlcanzada && numPruebas <= 20)
+            
+            while (!metaAlcanzada)
             {
                 GameObject cuestaProbada = cuestas[indexCuesta];
                 UnityEngine.Vector3 inicioCuesta = cuestaProbada.GetComponent<PathCreator>().bezierPath.GetPoint(0);
@@ -115,6 +115,7 @@ public class entrenamientoCuestas : MonoBehaviour
                 {
                     incrementoAceleracion = 50;
                 }
+            
 
             }
             incrementoAceleracion = 5;
