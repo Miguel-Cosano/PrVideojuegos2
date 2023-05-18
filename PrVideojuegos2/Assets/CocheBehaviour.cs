@@ -122,34 +122,33 @@ public class CocheBehaviour : MonoBehaviour
 
     void pruebaCuesta()
     {
-        if (usarModelo)
-        {
-            casosEntrenamiento = new weka.core.Instances(new java.io.FileReader("Assets/Finales_Cuesta.arff"));
-            saberPredecirAceleracion = new M5P();
-            casosEntrenamiento.setClassIndex(0);
-            saberPredecirAceleracion.buildClassifier(casosEntrenamiento);
+  
+        casosEntrenamiento = new weka.core.Instances(new java.io.FileReader("Assets/Finales_Cuesta.arff"));
+        saberPredecirAceleracion = new M5P();
+        casosEntrenamiento.setClassIndex(0);
+        saberPredecirAceleracion.buildClassifier(casosEntrenamiento);
 
-            //Calculo angulo y longitud de la cuesta
-            UnityEngine.Vector3 dir1 = finCuestaObjetivo.position - inicioCuestaObjetivo.position;
-            dir1.Normalize();
-            float angulo = UnityEngine.Vector3.Angle(dir1, Vector3.left);
+        //Calculo angulo y longitud de la cuesta
+        UnityEngine.Vector3 dir1 = finCuestaObjetivo.position - inicioCuestaObjetivo.position;
+        dir1.Normalize();
+        float angulo = UnityEngine.Vector3.Angle(dir1, Vector3.left);
 
-            Instance casoPrueba = new Instance(casosEntrenamiento.numAttributes());
-            casoPrueba.setValue(1, angulo);
+        Instance casoPrueba = new Instance(casosEntrenamiento.numAttributes());
+        casoPrueba.setValue(1, angulo);
 
-            aceleracion = (float)saberPredecirAceleracion.classifyInstance(casoPrueba);
-            usarModelo = false;
+        aceleracion = (float)saberPredecirAceleracion.classifyInstance(casoPrueba);
+        usarModelo = false;
 
-            print("Para esta cuesta de " + angulo + "º grados voy a aplicar una fuerza de " + aceleracion);
-        }
+        print("Para esta cuesta de " + angulo + "º grados voy a aplicar una fuerza de " + aceleracion);
+        
 
 
-        if (Vector3.Distance(finCuestaObjetivo.position, transform.position) >= 1)
+        if (Vector3.Distance(finCuestaObjetivo.position, transform.position) >= 1) //Mientras este alejado de la cima de la cuesta aplica aceleracion
         {
             rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);
         }
 
-        if ((Vector3.Distance(metaCuestas.position, transform.position) <= 2.5))
+        if ((Vector3.Distance(metaCuestas.position, transform.position) <= 2.5)) 
         {
             rigidBody.AddRelativeForce(aceleracion * Vector3.back, ForceMode.Impulse);
             print("Nivel de las cuestas superado");
