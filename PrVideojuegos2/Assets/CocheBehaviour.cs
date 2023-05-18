@@ -71,7 +71,7 @@ public class CocheBehaviour : MonoBehaviour
         Application.targetFrameRate = 30;
         indexCuesta = 0;
 
-        estado = Estado.Plataforma;
+        estado = Estado.Hachas;
         rigidBody = GetComponent<Rigidbody>();
 
         Brakes = 0;
@@ -153,14 +153,14 @@ public class CocheBehaviour : MonoBehaviour
             rigidBody.velocity = Vector3.zero;
             rigidBody.angularVelocity = Vector3.zero;
             rigidBody.angularDrag = 0f;
-            print("Nivel de las cuestas superado");
-            estado = Estado.Hachas;
-            transform.position = checkpoint4.position;
+            print("Nivel de las cuestas superado. Juego completado");
+            estado = Estado.Completado;
+            transform.position = checkpoint6.position;
             transform.rotation = Quaternion.Euler(0, -90, 0);
-            foreach (GameObject hacha in hachas)
+            /*foreach (GameObject hacha in hachas)
             {
                 hacha.GetComponent<AxeBehaviour>().ReStart();
-            }            
+            }        */    
         }
     }
 
@@ -175,7 +175,7 @@ public class CocheBehaviour : MonoBehaviour
                 {
                     if (cont == 0) 
                     {
-                        aceleracion = 25;
+                        aceleracion = 26;
                     } 
                 }
                 else
@@ -190,7 +190,7 @@ public class CocheBehaviour : MonoBehaviour
             }
         }
 
-        if((Vector3.Distance(metaPlataforma.position, transform.position) <= 0.5))
+        if((Vector3.Distance(metaPlataforma.position, transform.position) <= 1))
         {
             print("Nivel de la plataforma superado");
             estado = Estado.Zigzag;
@@ -276,9 +276,13 @@ public class CocheBehaviour : MonoBehaviour
         }
         if ((Vector3.Distance(metaSalto.position, transform.position) <= 0.5))
         {
-            print("Nivel del salto superado. Juego completado");
-            estado = Estado.Completado;
-            transform.position = checkpoint6.position;
+            rigidBody.ResetInertiaTensor();
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
+            rigidBody.angularDrag = 0f;
+            print("Nivel del salto superado.");
+            estado = Estado.Plataforma;
+            transform.position = checkpoint1.position;
         }
     }
 
