@@ -10,6 +10,7 @@ using java.util;
 using weka.classifiers.functions;
 using weka.classifiers;
 using weka.core.converters;
+using System.IO;
 
 public class CocheBehaviour : MonoBehaviour
 {
@@ -247,7 +248,12 @@ public class CocheBehaviour : MonoBehaviour
 
     void pruebaHachas()
     {
-        aceleracion = 25;
+        //aceleracion = 25;
+        string archivoPath = Path.Combine(Application.dataPath, "EntrenamientoHachas.txt");
+        using (StreamReader sr = new StreamReader(archivoPath))
+        {
+            aceleracion = float.Parse(sr.ReadLine());
+        }
         if ((Vector3.Distance(metaHachas.position, transform.position) <= 0.5))
         {
             print("Nivel de hachas superado");
@@ -259,7 +265,13 @@ public class CocheBehaviour : MonoBehaviour
 
     void pruebaSalto()
     {
-        aceleracion = 50;
+        //aceleracion = 50;
+        string archivoPath = Path.Combine(Application.dataPath, "EntrenamientoHachas.txt");
+        using (StreamReader sr = new StreamReader(archivoPath))
+        {
+            sr.ReadLine(); // descarta la primera linea
+            aceleracion = float.Parse(sr.ReadLine());
+        }
         if (Vector3.Distance(metaSalto.position, transform.position) >= 1)
         {
             rigidBody.AddRelativeForce(aceleracion * Vector3.forward, ForceMode.Impulse);

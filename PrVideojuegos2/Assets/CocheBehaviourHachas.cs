@@ -1,6 +1,7 @@
 using com.sun.corba.se.pept.broker;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CocheBehaviourHachas : MonoBehaviour
@@ -98,6 +99,13 @@ public class CocheBehaviourHachas : MonoBehaviour
             print("Nivel del salto superado. Entrenamiento completado con aceleracion " + aceleracion + " y impulso " + impulso);
             estado = Estado.Completado;
             transform.position = completado.position;
+            string archivoPath = Path.Combine(Application.dataPath, "EntrenamientoHachas.txt");
+
+            using (StreamWriter sw =  new StreamWriter(archivoPath))
+            {
+                sw.WriteLine(aceleracion);
+                sw.WriteLine(impulso);
+            }
         }
     }
 
