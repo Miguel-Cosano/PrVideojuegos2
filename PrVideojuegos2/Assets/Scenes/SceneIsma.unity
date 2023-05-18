@@ -698,6 +698,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &410367532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6418063190008155468, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+  m_PrefabInstance: {fileID: 3243479780195516676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410610018
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,7 +952,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548458244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.64, y: 0.816, z: 32.045}
+  m_LocalPosition: {x: 25.751, y: 0.816, z: 32.045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1394,6 +1399,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &674043125 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4106251785024133638, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+  m_PrefabInstance: {fileID: 3243479780195516676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &675817299
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,6 +1621,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &960423482 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6424610589342395406, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+  m_PrefabInstance: {fileID: 3243479780195516676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1001793532
 Mesh:
   m_ObjectHideFlags: 0
@@ -3568,6 +3583,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2066934998}
     - target: {fileID: 4298306190890898206, guid: e6ce532deb805ae4cbe81f6bd589bfc2, type: 3}
+      propertyPath: hachas.Array.data[0]
+      value: 
+      objectReference: {fileID: 2037393342}
+    - target: {fileID: 4298306190890898206, guid: e6ce532deb805ae4cbe81f6bd589bfc2, type: 3}
+      propertyPath: hachas.Array.data[1]
+      value: 
+      objectReference: {fileID: 410367532}
+    - target: {fileID: 4298306190890898206, guid: e6ce532deb805ae4cbe81f6bd589bfc2, type: 3}
+      propertyPath: hachas.Array.data[2]
+      value: 
+      objectReference: {fileID: 960423482}
+    - target: {fileID: 4298306190890898206, guid: e6ce532deb805ae4cbe81f6bd589bfc2, type: 3}
+      propertyPath: hachas.Array.data[3]
+      value: 
+      objectReference: {fileID: 674043125}
+    - target: {fileID: 4298306190890898206, guid: e6ce532deb805ae4cbe81f6bd589bfc2, type: 3}
       propertyPath: inicioCuestaObjetivo
       value: 
       objectReference: {fileID: 675817303}
@@ -3668,6 +3699,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2037393342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1105920650977685234, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+  m_PrefabInstance: {fileID: 3243479780195516676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2066934994
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,6 +4217,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1736672795}
+    - target: {fileID: 3784971499815711009, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+      propertyPath: velocity
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784971499815711009, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+      propertyPath: volteado
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4673897105775047576, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.4800005
@@ -4241,6 +4285,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1071914100}
+    - target: {fileID: 6155074678292555371, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+      propertyPath: velocity
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6155074678292555371, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
+      propertyPath: volteado
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3243479779416025575, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}
     - {fileID: 3243479779194746192, guid: 2bd438932c08560439c3ea265543f4f8, type: 3}

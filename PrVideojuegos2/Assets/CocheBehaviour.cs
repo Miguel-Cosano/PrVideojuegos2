@@ -45,7 +45,7 @@ public class CocheBehaviour : MonoBehaviour
     public Transform inicioCuestaObjetivo;
     public Transform finCuestaObjetivo;
 
-
+    public GameObject[] hachas = new GameObject[4];
 
     public float aceleracion = 500f;
     public float fuerzaDeRotura = 300f;
@@ -70,7 +70,7 @@ public class CocheBehaviour : MonoBehaviour
         Application.targetFrameRate = 30;
         indexCuesta = 0;
 
-        estado = Estado.Hachas;
+        estado = Estado.Plataforma;
         rigidBody = GetComponent<Rigidbody>();
 
         Brakes = 0;
@@ -148,11 +148,18 @@ public class CocheBehaviour : MonoBehaviour
 
         if ((Vector3.Distance(metaCuestas.position, transform.position) <= 2.5)) 
         {
-            rigidBody.AddRelativeForce(aceleracion * Vector3.back, ForceMode.Impulse);
+            rigidBody.ResetInertiaTensor();
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
+            rigidBody.angularDrag = 0f;
             print("Nivel de las cuestas superado");
             estado = Estado.Hachas;
             transform.position = checkpoint4.position;
             transform.rotation = Quaternion.Euler(0, -90, 0);
+            foreach (GameObject hacha in hachas)
+            {
+                hacha.GetComponent<AxeBehaviour>().ReStart();
+            }            
         }
     }
 
