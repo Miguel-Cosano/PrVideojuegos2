@@ -248,7 +248,6 @@ public class CocheBehaviour : MonoBehaviour
 
     void pruebaHachas()
     {
-        //aceleracion = 25;
         string archivoPath = Path.Combine(Application.dataPath, "EntrenamientoHachas.txt");
         using (StreamReader sr = new StreamReader(archivoPath))
         {
@@ -265,7 +264,6 @@ public class CocheBehaviour : MonoBehaviour
 
     void pruebaSalto()
     {
-        //aceleracion = 50;
         string archivoPath = Path.Combine(Application.dataPath, "EntrenamientoHachas.txt");
         using (StreamReader sr = new StreamReader(archivoPath))
         {
