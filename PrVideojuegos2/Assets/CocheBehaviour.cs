@@ -59,7 +59,6 @@ public class CocheBehaviour : MonoBehaviour
 
     public Transform[] raycast;
     RaycastHit[] hits = new RaycastHit[3];
-    public bool usarModelo;
 
     private int indexCuesta;
 
@@ -137,7 +136,6 @@ public class CocheBehaviour : MonoBehaviour
         casoPrueba.setValue(1, angulo);
 
         aceleracion = (float)saberPredecirAceleracion.classifyInstance(casoPrueba);
-        usarModelo = false;
 
         print("Para esta cuesta de " + angulo + "º grados voy a aplicar una fuerza de " + aceleracion);
         
